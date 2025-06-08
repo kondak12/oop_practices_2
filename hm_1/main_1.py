@@ -120,3 +120,63 @@ class PassengerPlane:
 
         self.speed = new_speed
         return f"Установлена новая скорость."
+
+
+
+# Task 4
+
+class Track:
+
+    name: str
+    executor: str
+    duration: int or float
+    genre: str
+
+    def __init__(self, name: str, executor: str, duration: int or float):
+        self.name = name
+        self.executor = executor
+        self.duration = duration
+
+
+
+class MusicAlbum:
+
+    name: str
+    executor: str
+    genre: str
+    track_list: list[Track]
+
+    def __init__(self, name: str, executor: str, genre: str, track_list: list[Track]):
+        self.name = name
+        self.executor = executor
+        self.genre = genre
+        self.track_list = track_list
+
+
+    def __str__(self):
+        return (f"Название: {self.name};\n"
+                f"Исполнитель: {self.executor};\n"
+                f"Жанр: {self.genre};\n"
+                f"Список треков: {self.track_list}.")       # Вопрос
+
+
+    def add_track(self, track: Track):
+        if track not in self.track_list:
+            self.track_list.append(track)
+            return f"Трек с названием '{track.name}' был удалён из альбома."
+        else:
+            return f"Трек с названием '{track.name}' уже есть в альбоме {self.name}."
+
+
+    def delete_track(self, track: Track):
+        if track in self.track_list:
+            self.track_list.remove(track)
+        else:
+            return f"Трека с таким названием нет в альбоме '{self.name}'."
+
+
+    def play_track(self, track: Track):
+        if track in self.track_list:
+            return f"Воспроизведение трека '{track.name}'."
+        else:
+            return f"Трека с таким названием нет в альбоме '{self.name}'."
