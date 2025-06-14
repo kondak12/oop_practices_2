@@ -189,3 +189,53 @@ class ColoredPoint(Point):
     
     def __str__(self):
         return f"x: {self.x}; y: {self.y}; color: {self.color};"
+
+
+# 6
+
+class Matrix:
+
+    a: int or float
+    b: int or float
+    c: int or float
+    d: int or float
+
+    def __init__(
+            self,
+            a: int or float,
+            b: int or float,
+            c: int or float,
+            d: int or float
+    ):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+
+
+    def __add__(self, other_matrix: Matrix):
+        return (
+            Matrix(
+                self.a + other_matrix.a,
+                self.b + other_matrix.d,
+                self.c + other_matrix.c,
+                self.d + other_matrix.d
+                ))
+
+
+    def __mul__(self, other_matrix: Matrix):
+        return (
+            Matrix(
+                self.a * other_matrix.a,
+                self.b * other_matrix.d,
+                self.c * other_matrix.c,
+                self.d * other_matrix.d
+            ))
+
+
+    def __len__(self):
+        return 4
+
+
+    def __str__(self):
+        return f"{self.a} {self.b}\n{self.c} {self.d}"
