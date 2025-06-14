@@ -15,6 +15,10 @@ class Point2D:
         self.y = y
 
 
+    def __str__(self):
+        return f"x: {self.x}; y: {self.y};"
+
+
 
 class Vector2D  :
 
@@ -28,6 +32,10 @@ class Vector2D  :
     ):
         self.start = start
         self.end = end
+
+
+    def __str__(self):
+        return f"Start point: {self.start}; End point: {self.end};"
 
 
     def add(self, other_vector: Vector2D):
