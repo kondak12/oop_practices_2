@@ -239,3 +239,29 @@ class Matrix:
 
     def __str__(self):
         return f"{self.a} {self.b}\n{self.c} {self.d}"
+
+
+# 7
+
+class Temperature:
+
+    degrees: int or float
+
+    def __init__(self, degrees: int or float):
+        self.degrees = degrees
+
+
+    def __add__(self, other_temperature: Temperature):
+        return Temperature(self.degrees + other_temperature.degrees)
+
+
+    def __sub__(self, other_temperature: Temperature):
+        return Temperature(self.degrees - other_temperature.degrees)
+
+
+    def __mul__(self, number: int or float):
+        return Temperature(self.degrees * number)
+
+
+    def __str__(self):
+        return f"Temperature: {self.degrees} C°;"
