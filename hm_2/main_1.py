@@ -165,3 +165,27 @@ class Point:
 
     def __str__(self):
         return f"x: {self.x}; y: {self.y};"
+
+
+# 5
+
+class ColoredPoint(Point):
+
+    color: str
+
+    def __init__(self, x, y, color: str):
+        super().__init__(x, y)
+        self.color = color
+
+
+    def __add__(self, other_point: ColoredPoint):
+        new_color = "black"
+
+        if self.color == other_point.color:
+            new_color = self.color
+
+        return ColoredPoint((self.x + other_point.x), (self.y + other_point.y), new_color)
+    
+    
+    def __str__(self):
+        return f"x: {self.x}; y: {self.y}; color: {self.color};"
