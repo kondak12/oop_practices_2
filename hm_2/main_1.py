@@ -34,11 +34,7 @@ class Vector2D  :
         self.end = end
 
 
-    def __str__(self):
-        return f"Start point: {self.start}; End point: {self.end};"
-
-
-    def add(self, other_vector: Vector2D):
+    def __add__(self, other_vector: Vector2D):
         return (
             Vector2D(
             Point2D(Vector2D.start.x + other_vector.start.x, Vector2D.start.y + other_vector.start.y),
@@ -46,7 +42,7 @@ class Vector2D  :
         )
 
 
-    def sub(self, other_vector: Vector2D):
+    def __sub__(self, other_vector: Vector2D):
         return (
             Vector2D(
             Point2D(Vector2D.start.x - other_vector.start.x, Vector2D.start.y - other_vector.start.y),
@@ -55,7 +51,7 @@ class Vector2D  :
 
 
 
-    def mul(self, number: int or float):
+    def __mul__(self, number: int or float):
         return (
             Vector2D
             (Point2D(self.start.x, self.start.y * number),
@@ -63,11 +59,15 @@ class Vector2D  :
         )
 
 
-    def len(self):
+    def __len__(self):
         st1 = self.end.x - self.start.x
         st2 = self.end.y - self.start.y
 
         return (st1**2 + st2**2)**0.5
+
+
+    def __str__(self):
+        return f"Start point: {self.start}; End point: {self.end};"
 
 
 # 2
