@@ -102,3 +102,38 @@ class Money:
 
     def __str__(self):
         return f"Dollars: {self.dollars}; Cents: {self.cents};"
+
+
+# 3
+
+class Time:
+
+    hours: int
+    minutes: int
+    seconds: int or float
+
+    def __init__(
+            self,
+            hours: int,
+            minutes: int,
+            seconds: int or float
+    ):
+        self.hours = hours + minutes // 60
+        self.minutes = minutes % 60 + seconds // 60
+        self.seconds = seconds % 60
+
+
+    def __add__(self, other_time: Time):
+        new_hours = self.hours + other_time.hours + other_time.minutes // 60
+        new_minutes = self.minutes + other_time.minutes % 60 + other_time.seconds // 60
+        new_seconds = self.seconds + other_time.seconds % 60
+
+        return Time(new_hours, new_minutes, new_seconds)
+
+
+    def __len__(self):
+        return (self.hours * 3600) + (self.minutes * 60) + self.seconds
+
+
+    def __str__(self):
+        return f"Hours: {self.hours}; Minutes: {self.minutes}; Seconds: {self.seconds};"
