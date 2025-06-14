@@ -137,3 +137,31 @@ class Time:
 
     def __str__(self):
         return f"Hours: {self.hours}; Minutes: {self.minutes}; Seconds: {self.seconds};"
+
+
+# 4
+
+class Point:
+
+    x: int or float
+    y: int or float
+
+    def __init__(
+            self,
+            x: int or float,
+            y: int or float
+    ):
+        self.x = x
+        self.y = y
+
+
+    def __add__(self, other_point: Point):
+        return Point(self.x + other_point.x, self.y + other_point.y)
+
+
+    def __sub__(self, other_point: Point):
+        return Point(self.x - other_point.x, self.y - other_point.y)
+
+
+    def __str__(self):
+        return f"x: {self.x}; y: {self.y};"
