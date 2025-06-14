@@ -68,3 +68,37 @@ class Vector2D  :
         st2 = self.end.y - self.start.y
 
         return (st1**2 + st2**2)**0.5
+
+
+# 2
+
+class Money:
+
+    dollars: int
+    cents: int
+
+    def __init__(
+            self,
+            dollars: int,
+            cents: int
+    ):
+        self.dollars = dollars + cents // 100
+        self.cents = cents % 100
+
+
+    def __add__(self, new_money: Money):
+        new_dollars = self.dollars + new_money.dollars + new_money.cents // 100
+        new_cents = self.cents + new_money.cents % 100
+
+        return Money(new_dollars, new_cents)
+
+
+    def __sub__(self, new_money: Money):
+        new_dollars = self.dollars - new_money.dollars - new_money.cents // 100
+        new_cents = self.cents - new_money.cents % 100
+
+        return Money(new_dollars, new_cents)
+
+
+    def __str__(self):
+        return f"Dollars: {self.dollars}; Cents: {self.cents};"
