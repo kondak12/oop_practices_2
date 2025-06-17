@@ -54,16 +54,16 @@ class Vector2D  :
     def __mul__(self, number: int or float):
         return (
             Vector2D
-            (Point2D(self.start.x, self.start.y * number),
-             Point2D(self.end.x, self.end.y * number))
+            (Point2D(self.start.x * number, self.start.y * number),
+             Point2D(self.end.x * number, self.end.y * number))
         )
 
 
-    def __len__(self):
+    def len(self):
         st1 = self.end.x - self.start.x
         st2 = self.end.y - self.start.y
 
-        return (st1**2 + st2**2)**0.5
+        return (st2**2 + st1**2)**0.5
 
 
     def __str__(self):
