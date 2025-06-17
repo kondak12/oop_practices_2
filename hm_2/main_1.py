@@ -87,15 +87,15 @@ class Money:
 
 
     def __add__(self, new_money: Money):
-        new_dollars = self.dollars + new_money.dollars + new_money.cents // 100
-        new_cents = self.cents + new_money.cents % 100
+        new_dollars = self.dollars + new_money.dollars
+        new_cents = self.cents + new_money.cents
 
         return Money(new_dollars, new_cents)
 
 
     def __sub__(self, new_money: Money):
-        new_dollars = self.dollars - new_money.dollars - new_money.cents // 100
-        new_cents = self.cents - new_money.cents % 100
+        new_dollars = self.dollars - new_money.dollars
+        new_cents = self.cents - new_money.cents
 
         return Money(new_dollars, new_cents)
 
