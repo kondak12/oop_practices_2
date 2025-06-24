@@ -54,16 +54,16 @@ class Vector2D  :
     def __mul__(self, number: int or float):
         return (
             Vector2D
-            (Point2D(self.start.x, self.start.y * number),
-             Point2D(self.end.x, self.end.y * number))
+            (Point2D(self.start.x * number, self.start.y * number),
+             Point2D(self.end.x * number, self.end.y * number))
         )
 
 
-    def __len__(self):
+    def len(self):
         st1 = self.end.x - self.start.x
         st2 = self.end.y - self.start.y
 
-        return (st1**2 + st2**2)**0.5
+        return (st2**2 + st1**2)**0.5
 
 
     def __str__(self):
@@ -87,15 +87,15 @@ class Money:
 
 
     def __add__(self, new_money: Money):
-        new_dollars = self.dollars + new_money.dollars + new_money.cents // 100
-        new_cents = self.cents + new_money.cents % 100
+        new_dollars = self.dollars + new_money.dollars
+        new_cents = self.cents + new_money.cents
 
         return Money(new_dollars, new_cents)
 
 
     def __sub__(self, new_money: Money):
-        new_dollars = self.dollars - new_money.dollars - new_money.cents // 100
-        new_cents = self.cents - new_money.cents % 100
+        new_dollars = self.dollars - new_money.dollars
+        new_cents = self.cents - new_money.cents
 
         return Money(new_dollars, new_cents)
 
