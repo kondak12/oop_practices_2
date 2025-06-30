@@ -151,3 +151,133 @@ print(uni.list_faculties()) # ['Математический факультет'
 print(math.list_students()) # ['Иван Иванов (12345)']
 profile = ivan.get_profile()
 print(profile) # Студент: Иван Иванов, ID: 12345
+
+
+# Task 3
+class Engine:
+
+    def __init__(self, power: int, type: str):
+
+        if power < 0: raise ValueError("Энергия двигателя не может быть отрицательной.")
+        if type.lower() not in ["бензиновый", "дизельный", "водородный"]: raise ValueError("Двигателя такого типа не может быть.")
+
+        self.__power = power
+        self.__type = type
+        self.__is_working = "остановлен"
+
+    def ignite(self) -> None:
+        if self.__is_working == "остановлен":
+            self.__is_working = "работает"
+            print("Двигатель был запущен.")
+        else:
+            print("Двигатель уже запущен.")
+
+    def shutdown(self) -> None:
+        if self.__is_working == "работает":
+            self.__is_working = "остановлен"
+            print("Двигатель был остановлен.")
+        else:
+            print("Двигатель и так не запущен.")
+
+    def service(self) -> None:
+        if self.__is_working != "на обслуживании":
+            self.__is_working = "на обслуживании"
+            print("Двигатель переведён на обслуживание.")
+        else:
+            print("Двигатель и так нa обслуживании.")
+
+    def get_power(self) -> int:
+        return self.__power
+
+    def get_type(self) -> str:
+        return self.__type
+
+    def status(self) -> str:
+        return self.__is_working
+
+
+class Wheel:
+
+    def __init__(self, size: int, type: str):
+
+        if size < 1: raise ValueError("Диаметр кодеса не может быть < 1 дюйма.")
+        if type.lower() not in ["летняя", "зимняя", "всесезонная"]: raise ValueError("Такого типа резины не может стоять на колесе.")
+
+        self.__size = size
+        self.__type = type
+        self.__pressure = 10
+
+    def rotate(self) -> None:
+        print("Колесо вращается...")
+
+    def inflate(self, pressure: float) -> None:
+        if 91 > pressure > 9:
+            self.__pressure = pressure
+        else:
+            print("Заданное давление БР недопустимо.")
+
+    def deflate(self) -> None:
+        self.__pressure = 10
+
+    def get_size(self) -> int:
+        return self.__size
+
+    def get_type(self) -> str:
+        return self.__type
+
+    def get_pressure(self):
+        return self.__pressure
+
+
+class Car:
+
+    def __init__(self, brand: str, model: str, engine: Engine, wheels: list[Wheel]):
+
+        if len(wheels) != 4: raise ValueError("Количество колёс != 4.")
+        if len(set(wheels)) != len(wheels): raise ValueError("Одно колесо не может стоять на нескольких местах сразу...")
+
+        self.__brand = brand
+        self.__model = model
+        self.__engine = engine
+        self.__wheels = wheels
+
+    def start(self) -> None:
+        if self.__engine.status() != "работает":
+            if all(filter(lambda a: a.get_pressure() > 10, self.__wheels)):
+                self.__engine.ignite()
+            else:
+                print("Машина не была запущена, проверьте давление колёс.")
+        else:
+            print("Машина уже запущена...")
+
+    def stop(self) -> None:
+        if self.__engine.status() != "остановлен":
+            self.__engine.shutdown()
+            print("Машина была остановлена.")
+        else:
+            print("Машина уже остановлена.")
+
+    def get_specs(self) -> str:
+        return f"{self.__brand} - {self.__model}, двигатель: {self.__engine.get_type()} - {self.__engine.get_power()} кВт."
+
+    def replace_wheel(self, idx: int, new: Wheel) -> None:
+        if 0 <= idx <= 3:
+            if new not in self.__wheels:
+                self.__wheels[idx] = new
+            else:
+                print("Нельзя заменить колесо на уже прикреплённое к машине другое колесо.")
+        else:
+            print("Введён недопустимый номер места для колеса.")
+
+print("--------------------------------------------------------------------------")
+engine = Engine(power=150, type="бензиновый")
+w1 = Wheel(size=16, type="всесезонная")
+w2 = Wheel(size=16, type="всесезонная")
+w3 = Wheel(size=16, type="всесезонная")
+w4 = Wheel(size=16, type="всесезонная")
+car = Car(brand="Toyota", model="Camry", engine=engine, wheels=[w1, w2, w3, w4])
+car.start()
+new_wheel = Wheel(size=16, type="зимняя")
+car.replace_wheel(2, new_wheel)
+print(car.get_specs())
+car.stop()
