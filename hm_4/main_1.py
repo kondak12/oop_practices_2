@@ -29,6 +29,18 @@ class Book:
         self.__title = new_title
         print("Название изменено.")
 
+    def get_title(self):
+        return self.__title
+
+    def get_author(self):
+        return self.__author
+
+    def get_year(self):
+        return self.__year
+
+    def get_bookmark(self):
+        return self.__bookmark
+
 
 class Library:
 
@@ -57,6 +69,15 @@ class Library:
         result = [book.getInfo() for book in self.__books]
         return result
 
+    def get_name(self):
+        return self.__name
+
+    def get_address(self):
+        return self.__address
+
+    def get_books(self):
+        return [book for book in self.__books]
+
 
 print("--------------------------------------------------------------------------")
 lib = Library("Центральная библиотека", "ул. Ленина, 10", [])
@@ -71,13 +92,14 @@ print(lib.listBooks())
 # Task 2
 class Student:
 
+    name: str
+    id: int
+    grades: list[int]
+
     def __init__(self, name: str, id: int, grades: list[int]):
         self.__name = name
         self.__id = id
         self.__grades = grades
-
-    def get_id(self):
-        return self.__id
 
     def get_profile(self) -> str:
         return f"Студент: {self.__name}, ID: {self.__id}"
@@ -85,15 +107,24 @@ class Student:
     def assign_grade(self, grade: int) -> None:
         self.__grades.append(grade)
 
+    def get_name(self):
+        return self.__name
+
+    def get_id(self):
+        return self.__id
+
+    def get_grades(self):
+        return [grade for grade in self.__grades]
+
 
 class Faculty:
+
+    name: str
+    students: list[Student]
 
     def __init__(self, name: str, students: list[Student]):
         self.__name = name
         self.__students = students
-
-    def get_name(self):
-        return self.__name
 
     def enroll(self, student: Student) -> None:
         if student not in self.__students:
@@ -116,8 +147,17 @@ class Faculty:
             if stud.get_id() == id:
                 return stud
 
+    def get_name(self):
+        return self.__name
+
+    def get_students(self):
+        return [stud for stud in self.__students]
+
 
 class University:
+
+    name: str
+    faculties: list[Faculty]
 
     def __init__(self, name: str, faculties: list[Faculty]):
         self.__name = name
@@ -143,6 +183,12 @@ class University:
             if _.get_name() == name:
                 return _
 
+    def get_name(self):
+        return self.__name
+
+    def get_faculties(self):
+        return [fac for fac in self.__faculties]
+
 print("--------------------------------------------------------------------------")
 uni = University("МГУ", [])
 math = Faculty("Математический факультет", [])
@@ -157,6 +203,9 @@ print(profile) # Студент: Иван Иванов, ID: 12345
 
 # Task 3
 class Engine:
+
+    power: int
+    type: str
 
     def __init__(self, power: int, type: str):
 
@@ -200,6 +249,9 @@ class Engine:
 
 class Wheel:
 
+    size: int
+    type: str
+
     def __init__(self, size: int, type: str):
 
         if size < 1: raise ValueError("Диаметр кодеса не может быть < 1 дюйма.")
@@ -232,6 +284,11 @@ class Wheel:
 
 
 class Car:
+
+    brand: str
+    model: str
+    engine: Engine
+    wheels: list[Wheel]
 
     def __init__(self, brand: str, model: str, engine: Engine, wheels: list[Wheel]):
 
@@ -290,6 +347,9 @@ import datetime
 
 class OrderItem:
 
+    item_name: str
+    count: int
+
     def __init__(self, item_name: str, count=1):
 
         if not isinstance(count, int): raise TypeError("Количество предметов может быть только целым.")
@@ -313,6 +373,11 @@ class OrderItem:
 
 
 class Client:
+
+    client_id: str
+    name: str
+    email: str
+    orders: list[Order]
 
     def __init__(self, client_id: str, name: str, email: str, orders: list[Order]):
 
@@ -343,6 +408,11 @@ class Client:
 
 
 class Order:
+
+    order_id: str
+    date: datetime.date
+    client: Client
+    items: list[OrderItem]
 
     def __init__(self, order_id: str, date: datetime.date, client: Client, items: list[OrderItem]):
 
