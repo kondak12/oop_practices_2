@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Task 1
 class Book:
 
@@ -281,3 +283,106 @@ new_wheel = Wheel(size=16, type="зимняя")
 car.replace_wheel(2, new_wheel)
 print(car.get_specs())
 car.stop()
+
+
+# Task 4
+import datetime
+
+class OrderItem:
+
+    def __init__(self, item_name: str, count=1):
+
+        if not isinstance(count, int): raise TypeError("Количество предметов может быть только целым.")
+        if count < 1: raise ValueError("Количество предметов не может быть < 0.")
+
+        self.__item_name = item_name
+        self.__count = count
+
+    def __str__(self):
+        return f"{self.__item_name} - {self.__count} штук(а/и)."
+
+    def __add__(self, other_item):
+        if self.__item_name == other_item.get_item_name:
+            return OrderItem(self.__item_name, self.__count + other_item.get_count())
+
+    def get_item_name(self):
+        return self.__item_name
+
+    def get_count(self):
+        return self.__count
+
+
+class Client:
+
+    def __init__(self, client_id: str, name: str, email: str, orders: list[Order]):
+
+        if len(orders) != len(set(orders)): raise ValueError("Один и тот же заказ не может быть в списке > 1 раза.")
+
+        self.__client_id = client_id
+        self.__name = name
+        self.__email = email
+        self.__orders = orders
+
+    def place_order(self, order: Order) -> None:
+        if order not in self.__orders:
+            self.__orders.append(order)
+        else:
+            print("Добавленный заказ уже в заказах пользователя.")
+
+    def get_client_id(self):
+        return self.__client_id
+
+    def get_name(self):
+        return self.__name
+
+    def get_email(self):
+        return self.__email
+
+    def get_orders(self) -> list[Order]:
+        return [order for order in self.__orders]
+
+
+class Order:
+
+    def __init__(self, order_id: str, date: datetime.date, client: Client, items: list[OrderItem]):
+
+        if len(set(items)) != len(items): raise ValueError("Один и тот же предмет(объект) не может быть заказан > 1 раза.")
+
+        self.__order_id = order_id
+        self.__date = date
+        self.__client = client
+        self.__items = items
+
+    def add_item(self, order_item: OrderItem) -> None:
+        if order_item.get_item_name() in self.__items:
+            for i in range(len(self.__items)):
+                if self.__items[i].get_item_name() == order_item.get_item_name():
+                    self.__items[i] = self.__items[i] + order_item
+                    break
+        else:
+            self.__items.append(order_item)
+
+    def get_order_id(self):
+        return self.__order_id
+
+    def get_date(self):
+        return self.__date
+
+    def get_clients(self):
+        return self.__client
+
+    def get_items(self):
+        return [item for item in self.__items]
+
+    def get_summary(self) -> str:
+        return f"Заказ {self.__order_id} от {self.__date} для {self.__client.get_name()}(id: {self.__client.get_client_id()}): {[item.__str__() for item in self.__items]}"
+
+
+print("--------------------------------------------------------------------------")
+client = Client("C001", "Анна Петрова", "anna@example.com", [])
+order = Order("O1001", datetime.date.today(), client, [])
+client.place_order(order)
+item = OrderItem("Книга", 2)
+order.add_item(item)
+print(client.get_orders())
+print(order.get_summary()) # Заказ O1001 от 2025-06-24 для Анна Петрова: Книга (в количестве: 2)
